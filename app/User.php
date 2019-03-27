@@ -50,4 +50,15 @@ class User extends Authenticatable
         $user->save();
         return $user;
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany('App\Models\CartItem');
+    }
+
+    public function itemsIngredients()
+    {
+        return $this->belongsToMany('App\Models\ItemIngredients');
+    }
+
 }

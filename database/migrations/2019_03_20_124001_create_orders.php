@@ -26,7 +26,7 @@ class CreateOrders extends Migration
                 ->on('users')
                 ->onDelete('cascade');
             $table->enum('status', ['Canceled', 'Placed', 'Approved', 'Shipped', 'Received'])->default('Placed');
-            $table->float('total_amount');
+            $table->float('total_price');
         });
     }
 

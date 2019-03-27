@@ -20,6 +20,7 @@ class CreateItemIngredient extends Migration
                 ->references('id')
                 ->on('stores')
                 ->onDelete('cascade');
+            $table->string('name')->nullable();
             $table->float('price', 10, 2);
         });
     }
