@@ -20,6 +20,8 @@ class Item extends Model
         return $this->hasMany('App\Models\ItemIngredients');
     }
 
+
+
     public function getPrice()
     {
         $itemIngredients = $this->itemIngredients()->get();
@@ -30,5 +32,14 @@ class Item extends Model
             $sum += $ingredientAmount * $ingredientPrice;
         }
         return $sum;
+    }
+
+    public static function makeNewItem ($request,$store)
+    {
+        $item = new Item();
+        $item->store_id = $store;
+        $item->name = $request->name;
+        $item->save();
+        return $item;
     }
 }

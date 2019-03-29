@@ -38,6 +38,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function ()
         //8
         Route::post('store/{store}/items', 'ManagerController@addItemAndArrIngredients');
         //9
+        Route::patch('store/{store}/items/{item}', 'ManagerController@updateItemAndIngredients');
+        //10
+        Route::delete('store/{store}/items/{item}', 'ManagerController@deleteItemAndIngredients');
+        //11
+        Route::get('store/{store}/orders', 'ManagerController@getAllOrderInStore');
+
+
 
 
     });

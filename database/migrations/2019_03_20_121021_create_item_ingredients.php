@@ -25,7 +25,7 @@ class CreateItemIngredients extends Migration
                 ->references('id')
                 ->on('item_ingredient')
                 ->onDelete('cascade');
-            $table->float('amount');
+            $table->float('amount')->nullable(true);
 
         });
     }
