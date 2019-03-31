@@ -20,8 +20,6 @@ class Item extends Model
         return $this->hasMany('App\Models\ItemIngredients');
     }
 
-
-
     public function getPrice()
     {
         $itemIngredients = $this->itemIngredients()->get();

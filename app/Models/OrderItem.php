@@ -24,4 +24,5 @@ class OrderItem extends Model
             ]);
         }
     }
+
 }

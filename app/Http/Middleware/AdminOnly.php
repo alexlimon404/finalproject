@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Enums\UserType;
 use Closure;
 
-class StoreUserOnly
+class AdminOnly
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class StoreUserOnly
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->role == UserType::StoreUser) {
+        if ($request->user()->role == UserType::Admin) {
             return $next($request);
         }
-        abort(403, "Доступ для 'StoreUser' не активен");
+        abort(403, "Доступ только для Admin");
     }
 }

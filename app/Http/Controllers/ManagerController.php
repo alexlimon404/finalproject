@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\ItemIngredients;
 use Illuminate\Http\Request;
 use App\Enums\UserType;
+use App\Enums\StatusType;
 use App\Http\Transformers\Transformer;
 use App\Support\OtherFunc;
 
@@ -120,6 +121,7 @@ class ManagerController extends Controller
     {
         $item = Item::makeNewItem($request, $store);
         $idIngredients = ItemIngredient::createItemIngredient($request, $store, $item);
+        dd(ItemIngredient::find([$idIngredients]));
         return response()->json([
             "success" => true,
             "data" => [
@@ -197,6 +199,64 @@ class ManagerController extends Controller
             ],
         ]);
     }
+    /**
+     * 11. GET
+     * */
+    public function getAllOrderInStore($store, Request $request)
+    {
+        $minTotalAmount = $request->min_total_amount ? : 9999999999;
+        $maxTotalAmount = $request->max_total_amount ? : 0;
+        $orders = Order::where('store_id', $store)->where('total_price', '<', $minTotalAmount)->where('total_price', '>', $maxTotalAmount)->where('status', $request->status)->first();
+        $orderItems = $orders->orderItems()->get();
+        return response()->json([
+            "success" => true,
+            "data" => [
+                "order" => [
+                    "id" => $orders->id,
+                    "user_id" => $orders->user_id,
+                    "store_id" => $orders->store_id,
+                    "total_price" => $orders->sum('total_price'),
+                    "items" =>  OtherFunc::paginate($orderItems)
+                ]
+            ],
+        ]);
+    }
+
+    /**
+     * 12.
+     * */
+    public function updateStatusOrder(Request $request, $store, $order)
+    {
+        $user = User::where('api_token', $request->api_token)->firstOrFail();
+        //StoreUser
+        if ($user->role === UserType::StoreUser) {
+            if ($request->status === StatusType::Canceled or
+                $request->status === StatusType::Placed or
+                $request->status === StatusType::Approved or
+                $request->status === StatusType::Shipped){
+                Order::changeStatusForStoreUser($user, $store, $order, $request);
+                return response()->json([
+                    "success" => true,
+                    "message" => "id - $user->id c ролью '$user->role' поменял статус на $request->status"
+                ]);
+            }
+            return abort(403, "У user id-> $user->id - $user->full_name нет прав менять статус этого заказа");
+        }
+        //Customer
+        if ($user->role === UserType::Customer) {
+            if ($request->status === StatusType::Shipped or
+                $request->status === StatusType::Received){
+                Order::changeStatusForStoreCustomer($user, $store, $order, $request);
+                return response()->json([
+                    "success" => true,
+                    "message" => "id - $user->id c ролью '$user->role' поменял статус на $request->status"
+                ]);
+            }
+            return abort(403, "У user id-> $user->id - $user->full_name нет прав менять статус этого заказа");
+        }
+
+    }
+
 
 
 

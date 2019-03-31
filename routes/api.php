@@ -43,11 +43,20 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.'], function ()
         Route::delete('store/{store}/items/{item}', 'ManagerController@deleteItemAndIngredients');
         //11
         Route::get('store/{store}/orders', 'ManagerController@getAllOrderInStore');
-
-
-
-
     });
+
+    Route::group(['middleware' => ['auth:api', 'all_type_users']], function () {
+        //12
+        Route::patch('store/{store}/order/{order}', 'ManagerController@updateStatusOrder');
+    });
+
+    Route::group(['middleware' => ['auth:api', 'admin_only']], function () {
+        //13
+        Route::post('store/{store}/users', 'AdminController@addStoreUser');
+        //14
+        Route::delete('store/{store}/users/{user}', 'AdminController@delStoreUser');
+    });
+
 
 
 
