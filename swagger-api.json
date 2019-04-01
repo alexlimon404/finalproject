@@ -1,0 +1,864 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "version": "1.0.0",
+    "title": "FinalProject"
+  },
+  "host": "FinalProject.ru",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    },
+    {
+      "name": "customer",
+      "description": "Operations about costomer"
+    },
+    {
+      "name": "storeuser",
+      "description": "Operations about storeUser"
+    },
+    {
+      "name": "common",
+      "description": "Common route for Customer And Store users"
+    },
+    {
+      "name": "admin",
+      "description": "Operations about intern homeworks"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/register": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Registred User in API",
+        "description": "description here.",
+        "operationId": "registredUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Email User",
+            "required": true,
+            "type": "string",
+            "format": "str"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "Password User",
+            "required": true,
+            "type": "string",
+            "format": "str"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/registration/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Registred User in API",
+        "description": "description here.",
+        "operationId": "loginUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Email User",
+            "required": true,
+            "type": "string",
+            "format": "str"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "Password User",
+            "required": true,
+            "type": "string",
+            "format": "str"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/registration/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/items/{item}": {
+      "post": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Add Item in Cart",
+        "description": "description here.",
+        "operationId": "addItemInCart",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "amount",
+            "in": "path",
+            "description": "Amount Item",
+            "required": true,
+            "type": "integer",
+            "format": "float"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/item/{item}": {
+      "delete": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "delete Item in Cart",
+        "description": "description here.",
+        "operationId": "delItemInCart",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/checkout": {
+      "post": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Add order and count sum",
+        "description": "description here.",
+        "operationId": "addOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me/info": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Get User Info",
+        "description": "description here.",
+        "operationId": "getUserInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/manage/Order"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me/orders": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Get User Orders",
+        "description": "description here.",
+        "operationId": "getUserOrders",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "page",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "status",
+            "in": "header",
+            "description": "status order",
+            "required": false,
+            "type": "string",
+            "format": "enum"
+          },
+          {
+            "name": "min_total_amount",
+            "in": "header",
+            "description": "Minimal total amount",
+            "required": false,
+            "type": "integer",
+            "format": "float"
+          },
+          {
+            "name": "max_total_amount",
+            "in": "header",
+            "description": "Maximal total amount",
+            "required": false,
+            "type": "integer",
+            "format": "float"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/manage/order"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/items": {
+      "post": {
+        "tags": [
+          "storeuser"
+        ],
+        "summary": "Add item and arr ingredients",
+        "description": "description here.",
+        "operationId": "addInStoreItemAndArrIngredients",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "$ref": "#/manage/items"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/items/{item}": {
+      "patch": {
+        "tags": [
+          "storeuser"
+        ],
+        "summary": "Update item and arr ingredients",
+        "description": "description here.",
+        "operationId": "updateInStoreItemAndArrIngredients",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "path",
+            "description": "Item ID",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Store ID",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "name",
+            "in": "header",
+            "description": "Name item",
+            "required": false,
+            "type": "string",
+            "format": "str"
+          },
+          {
+            "name": "ingredients",
+            "in": "header",
+            "description": "Name ingredient",
+            "required": false,
+            "type": "string",
+            "format": "arr"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "$ref": "#/manage/items"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/item/{item}": {
+      "delete": {
+        "tags": [
+          "storeuser"
+        ],
+        "summary": "Delete item and arr ingredients",
+        "description": "description here.",
+        "operationId": "deleteInStoreItemAndArrIngredients",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "item",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "$ref": "#/manage/items"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/orders": {
+      "get": {
+        "tags": [
+          "storeuser"
+        ],
+        "summary": "Get all orders in store",
+        "description": "description here.",
+        "operationId": "getAllOrdersinStore",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "page",
+            "in": "header",
+            "description": "page num",
+            "required": false,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "status",
+            "in": "header",
+            "description": "Status order",
+            "required": false,
+            "type": "string",
+            "format": "enum"
+          },
+          {
+            "name": "min_total_amount",
+            "in": "header",
+            "description": "Minimal total amount",
+            "required": false,
+            "type": "integer",
+            "format": "float"
+          },
+          {
+            "name": "max_total_amount",
+            "in": "header",
+            "description": "Maximal total amount",
+            "required": false,
+            "type": "integer",
+            "format": "float"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/manage/order"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/order/{order}": {
+      "patch": {
+        "tags": [
+          "common"
+        ],
+        "summary": "Get all orders in store",
+        "description": "description here.",
+        "operationId": "updateStatusOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Store ID",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "order",
+            "in": "path",
+            "description": "Order ID",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/users": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Add store user",
+        "description": "description here.",
+        "operationId": "addStoreUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "order",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/{store}/users/{user}": {
+      "delete": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Delete Store User",
+        "description": "description here.",
+        "operationId": "deleteStoreUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "store",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Item",
+            "required": true,
+            "type": "integer",
+            "format": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "registration": {
+    "User": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "token": {
+          "type": "string",
+          "format": "str",
+          "example": "wejrwelrll32l32"
+        }
+      }
+    }
+  },
+  "manage": {
+    "Order": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "id": {
+          "type": "int",
+          "format": "int",
+          "example": "1"
+        },
+        "email": {
+          "type": "string",
+          "format": "str",
+          "example": "ivan.p@gmail.ru"
+        },
+        "create_at": {
+          "type": "string",
+          "format": "str",
+          "example": "2019-03-12 07:15:40"
+        }
+      }
+    },
+    "order": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "id": {
+          "type": "int",
+          "format": "int",
+          "example": "1"
+        },
+        "user_id": {
+          "type": "int",
+          "format": "int",
+          "example": "1"
+        },
+        "store_id": {
+          "type": "int",
+          "format": "int",
+          "example": "1"
+        },
+        "total_amount": {
+          "type": "int",
+          "format": "int",
+          "example": "234.34"
+        },
+        "items": {
+          "$ref": "#/manage/OrderItems"
+        }
+      }
+    },
+    "OrderItems": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "int",
+          "format": "int",
+          "example": "1"
+        },
+        "amount": {
+          "type": "int",
+          "format": "int",
+          "example": "242"
+        }
+      }
+    },
+    "items": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "id": {
+          "type": "int",
+          "format": "int",
+          "example": "1"
+        },
+        "store_id": {
+          "type": "int",
+          "format": "int",
+          "example": "2"
+        },
+        "name": {
+          "type": "int",
+          "format": "int",
+          "example": "супчик"
+        },
+        "ingredient": {
+          "type": "int",
+          "format": "int",
+          "example": []
+        }
+      }
+    }
+  }
+}

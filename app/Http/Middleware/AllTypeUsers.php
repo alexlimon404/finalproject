@@ -21,6 +21,5 @@ class AllTypeUsers
             $request->user()->role == UserType::Customer) {
             return $next($request);
         }
-        abort(403, "Доступ только для Admin");
     }
 }

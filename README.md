@@ -21,3 +21,9 @@
 ---
 * добавлен 11-14 роут
 * исправлены ошибки
+
+6
+---
+* добавлен Swagger
++ [Swagger API Docs - VIEW](https://generator.swagger.io/?url=https://raw.githubusercontent.com/mirrorbitmirror/finalproject/master/swagger-api.json)
++ [Swagger API Docs - EDIT](https://editor.swagger.io/?url=https://raw.githubusercontent.com/mirrorbitmirror/finalproject/master/swagger-api.json)
