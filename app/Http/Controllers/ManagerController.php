@@ -108,7 +108,9 @@ class ManagerController extends Controller
         $order = Order::where('user_id', $user->id)->where('status', $request->get('status'))->first();
         $minTotalAmount = $request->min_total_amount ? : 9999999999;
         $maxTotalAmount = $request->max_total_amount ? : 0;
-        $items = CartItem::where('user_id', $user->id)->where('amount', '<', $minTotalAmount)->where('amount', '>', $maxTotalAmount)->get();
+        $items = CartItem::where('user_id', $user->id)->
+            where('amount', '<', $minTotalAmount)->
+            where('amount', '>', $maxTotalAmount)->get();
         return response()->json([
             "success" => true,
             "data" => [
@@ -134,7 +136,6 @@ class ManagerController extends Controller
     {
         $item = Item::makeNewItem($request, $store);
         $idIngredients = ItemIngredient::createItemIngredient($request, $store, $item);
-        dd(ItemIngredient::find([$idIngredients]));
         return response()->json([
             "success" => true,
             "data" => [
@@ -150,9 +151,7 @@ class ManagerController extends Controller
 
     /**
      * 9.PATCH
-     * @param Request $request
-     * @param $store
-     * @param $item
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateItemAndIngredients (Request $request, $store, $item)
     {
@@ -212,14 +211,21 @@ class ManagerController extends Controller
             ],
         ]);
     }
+
     /**
      * 11. GET
-     * */
+     * @param $store
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getAllOrderInStore($store, Request $request)
     {
         $minTotalAmount = $request->min_total_amount ? : 9999999999;
         $maxTotalAmount = $request->max_total_amount ? : 0;
-        $orders = Order::where('store_id', $store)->where('total_price', '<', $minTotalAmount)->where('total_price', '>', $maxTotalAmount)->where('status', $request->status)->first();
+        $orders = Order::where('store_id', $store)->
+            where('total_price', '<', $minTotalAmount)->
+            where('total_price', '>', $maxTotalAmount)->
+            where('status', $request->status)->first();
         $orderItems = $orders->orderItems()->get();
         return response()->json([
             "success" => true,
@@ -247,7 +253,7 @@ class ManagerController extends Controller
                 $request->status === StatusType::Placed or
                 $request->status === StatusType::Approved or
                 $request->status === StatusType::Shipped){
-                Order::changeStatusForStoreUser($user, $store, $order, $request);
+                Order::changeStatusForOrderUser($user, $store, $order, $request);
                 return response()->json([
                     "success" => true,
                     "message" => "id - $user->id c ролью '$user->role' поменял статус на $request->status"
@@ -259,7 +265,7 @@ class ManagerController extends Controller
         if ($user->role === UserType::Customer) {
             if ($request->status === StatusType::Shipped or
                 $request->status === StatusType::Received){
-                Order::changeStatusForStoreCustomer($user, $store, $order, $request);
+                Order::changeStatusForOrderCustomer($user, $store, $order, $request);
                 return response()->json([
                     "success" => true,
                     "message" => "id - $user->id c ролью '$user->role' поменял статус на $request->status"
@@ -267,10 +273,11 @@ class ManagerController extends Controller
             }
             return abort(403, "У user id-> $user->id - $user->full_name нет прав менять статус этого заказа");
         }
-
+        //Admin
+        Order::changeStatusForOrderAdmin($user, $store, $order, $request);
+        return response()->json([
+            "success" => true,
+            "message" => "id - $user->id c ролью '$user->role' поменял статус на $request->status"
+        ]);
     }
-
-
-
-
 }

@@ -39,6 +39,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @param $request
+     * @return User
+     */
     public static function createUser($request)
     {
         $user = new User();
@@ -51,11 +55,17 @@ class User extends Authenticatable
         return $user;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function cartItems()
     {
         return $this->hasMany('App\Models\CartItem');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function itemsIngredients()
     {
         return $this->belongsToMany('App\Models\ItemIngredients');
