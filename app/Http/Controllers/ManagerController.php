@@ -25,7 +25,14 @@ class ManagerController extends Controller
      */
     public function addItem (Request $request, $item)
     {
-        CartItem::createCartItem($request, $item);
+        $user = User::where('api_token', $request->api_token)->first();
+        if(!Item::where('id', $item)->exists()) {
+            return response(array(
+                'message' => 'такого товара не существует',
+            ), 403);
+        }
+        $itemCollection = Item::where('id', $item)->first();
+        CartItem::createCartItem($request, $itemCollection, $user);
         return response()->json([
             "success" => true
         ]);
@@ -36,9 +43,15 @@ class ManagerController extends Controller
      * @param $item
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delItem($item)
+    public function delItem(Request $request, $item)
     {
-        CartItem::deleteItems($item);
+        $user = User::where('api_token', $request->api_token)->first();
+        if(!CartItem::where('item_id', $item)->exists()) {
+            return response(array(
+                'message' => 'такого товара не существует',
+            ), 403);
+        }
+        CartItem::deleteItems($user, $item);
         return response()->json([
             "success" => true
         ]);

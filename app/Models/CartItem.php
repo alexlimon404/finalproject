@@ -16,19 +16,20 @@ class CartItem extends Model
 
     public $timestamps = false;
 
-    public static function createCartItem($request, $item)
+    public static function createCartItem($request, $itemCollection, $user)
     {
         $cartItems = new CartItem();
-        $cartItems->user_id = $request->user_id;
-        $cartItems->item_id = $item;
+        $cartItems->user_id = $user->id;
+        $cartItems->item_id = $itemCollection->id;
+        $cartItems->store_id = $itemCollection->store_id;
         $cartItems->amount = $request->amount;
         $cartItems->save();
         return $cartItems;
     }
 
-    public static function deleteItems($item)
+    public static function deleteItems($user, $item)
     {
-        $deletedRows = CartItem::where('item_id', $item)->delete();
+        $deletedRows = CartItem::where('item_id', $item)->where('user_id', $user->id)->delete();
         return $deletedRows;
     }
 

@@ -12,6 +12,11 @@ class AuthController extends Controller
 {
     public function registrationUser(AuthRequest $request)
     {
+        if(User::where('email', $request->email)->first()) {
+            return response(array(
+                'message' => 'данный email занят',
+            ), 403);
+        }
         $data = User::createUser($request);
         return response()->json([
             "success" => true,
@@ -36,7 +41,7 @@ class AuthController extends Controller
             }
         }
         return response(array(
-            'message' => 'Unauthorized, check your credentials.',
+            'message' => 'Unauthorized, нет такой комбинации email & pass',
         ), 401);
     }
 }
