@@ -30,7 +30,7 @@ class CreateCartItems extends Migration
                 ->references('id')
                 ->on('stores')
                 ->onDelete('cascade');
-            $table->float('amount');
+            $table->float('amount')->nullable();
         });
     }
 

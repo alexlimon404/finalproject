@@ -27,9 +27,9 @@ class CartItem extends Model
         return $cartItems;
     }
 
-    public static function deleteItems($user, $item)
+    public static function deleteItems($item)
     {
-        $deletedRows = CartItem::where('item_id', $item)->where('user_id', $user->id)->delete();
+        $deletedRows = CartItem::where('item_id', $item)->delete();
         return $deletedRows;
     }
 

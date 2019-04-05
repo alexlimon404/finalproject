@@ -29,7 +29,7 @@ class ManagerController extends Controller
         if(!Item::where('id', $item)->exists()) {
             return response(array(
                 'message' => 'такого товара не существует',
-            ), 403);
+            ), 404);
         }
         $itemCollection = Item::where('id', $item)->first();
         CartItem::createCartItem($request, $itemCollection, $user);
@@ -45,13 +45,12 @@ class ManagerController extends Controller
      */
     public function delItem(Request $request, $item)
     {
-        $user = User::where('api_token', $request->api_token)->first();
         if(!CartItem::where('item_id', $item)->exists()) {
             return response(array(
-                'message' => 'такого товара не существует',
-            ), 403);
+                'message' => 'такого товара нет в корзине',
+            ), 404);
         }
-        CartItem::deleteItems($user, $item);
+        CartItem::deleteItems($item);
         return response()->json([
             "success" => true
         ]);
